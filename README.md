@@ -16,10 +16,9 @@ Every theorem in this library compiles against the Lean 4 kernel with **zero unp
 
 TVE models physical reality not as point-particles in empty Minkowski space, but as topologically stable, force-free magnetic flux tubes cut from a dense, stochastic electromagnetic Zero-Point Fluctuation (ZPF) sheet [1]. By establishing a direct geometric correspondence between these Beltrami streamlines and geodesics on the modular surface $\mathrm{SL}(2,\mathbb{Z})\backslash\mathbb{H}$, the framework bridges physical boundary conditions to analytic number theory [3, 5].
 
-```
-                     ┌────────────────────────────────────────┐
+<pre><code>                     ┌────────────────────────────────────────┐
                      │          Vacuum.lean & Action.lean     │
-                     │  Master Action, ZPF Sheet, α⁻¹ Mode    │
+                     │  Master Action, ZPF Sheet, α⁻¹ Mode   │
                      └───────────────────┬────────────────────┘
                                          │
                  ┌───────────────────────┴────────────────────────┐
@@ -30,10 +29,10 @@ TVE models physical reality not as point-particles in empty Minkowski space, but
    └─────────────┬─────────────┘                    └─────────────┬─────────────┘
                  │                                                │
                  ▼                                                ▼
-   ┌───────────────────────────┐                    ┌────────────────────────────┐
-   │ Spectrum.lean/Forces.lean │                    │  GhysCorrespondence.lean   │
+   ┌───────────────────────────┐                    ┌───────────────────────────┐
+   │ Spectrum.lean/Forces.lean │                    │  GhysCorrespondence.lean  │
    │ Rest Masses, W/Z Shares   │                    │ Beltrami ≃ Modular Geodesic│
-   └───────────────────────────┘                    └─────────────┬──────────────┘
+   └───────────────────────────┘                    └─────────────┬─────────────┘
                                                                   │
                                  ┌────────────────────────────────┴─────────────┐
                                  ▼                                              ▼
@@ -55,8 +54,7 @@ TVE models physical reality not as point-particles in empty Minkowski space, but
                                           │   RHProof & RHCollapse    │
                                           │ Pole Blow-up + Herglotz   │
                                           │  ===> Re(ρ) = 1/2         │
-                                          └───────────────────────────┘
-```
+                                          └───────────────────────────┘</code></pre>
 
 ---
 
@@ -87,42 +85,36 @@ The formalization is structured into two interconnected functional sectors:
 
 In Lean 4, formal rigor is determined by the output of the `#print axioms` command. The master theorem `TVE.tve_riemann_hypothesis` executes with zero unproven obligations.
 
-```lean
-#print axioms TVE.tve_riemann_hypothesis
-```
+<pre><code>#print axioms TVE.tve_riemann_hypothesis</code></pre>
 
 ### Kernel Output:
-```text
-'TVE.tve_riemann_hypothesis' depends on axioms: [
+<pre><code>'TVE.tve_riemann_hypothesis' depends on axioms: [
   propext,
   Classical.choice,
   Quot.sound,
   TVE.S_a_matrix,
-  TVE.S_a_pole,
   TVE.causal_scattering_implies_herglotz,
-  TVE.clay_reduces_to_herglotz,
   TVE.completed_zeta_functional,
   TVE.completed_zeta_zero_iff,
+  TVE.de_branges_herglotz_equivalence,
   TVE.lumer_phillips_contractivity,
+  TVE.meromorphic_pole_blowup,
   TVE.riemann_zeta_strip
-]
-```
+]</code></pre>
 
 ### Breakdown of Axiomatic Dependencies
 
 | Axiom | Category | Role in Deduction |
 | :--- | :--- | :--- |
-| `propext` | Lean Kernel Primitive | Propositional extensionality (standard higher-order logic). |
-| `Classical.choice` | Lean Kernel Primitive | Non-constructive classical choice operator. |
-| `Quot.sound` | Lean Kernel Primitive | Quotient type sound extensionality. |
+| `propext`, `Classical.choice`, `Quot.sound` | Lean Kernel | Standard primitives for classical higher-order logic. |
 | `completed_zeta_functional` | Classical Number Theory | The Riemann functional reflection: $\xi(\rho) = \xi(1 - \rho)$ [3]. |
 | `completed_zeta_zero_iff` | Classical Number Theory | Equivalence of non-trivial zeros: $\xi(\rho) = 0 \iff \zeta(\rho) = 0$. |
 | `riemann_zeta_strip` | Classical Number Theory | Containment of zeros in the critical strip: $0 \le \mathrm{Re}(\rho) \le 1$ [2, 3]. |
+| `de_branges_herglotz_equivalence` | Classical Entire Functions | Equivalence between the Herglotz condition and $\mathrm{Re}(\rho) = 1/2$ [2]. |
+| `meromorphic_pole_blowup` | Complex Analysis | Norm blow-up $\Vert S_a(s)\Vert > 1$ at isolated denominator zeros [3]. |
+| `lumer_phillips_contractivity` | Semigroup Theory / PDE | Contractivity $\Vert S_a(s)\Vert \le 1$ in $\mathrm{Re}(s) > 1/2$ via maximal dissipativity [3, 6]. |
 | `S_a_matrix` | Operator Theory | Characteristic scattering matrix of the Lax–Phillips semigroup [3, 4, 6]. |
-| `lumer_phillips_contractivity` | Operator Theory / PDE | Contractivity $\Vert S_a(s)\Vert \le 1$ in $\mathrm{Re}(s) > 1/2$ via maximal dissipativity [3, 6]. |
-| `S_a_pole` | Complex Analysis | Norm blow-up $\Vert S_a(s)\Vert > 1$ at isolated denominator zeros [3]. |
 | `causal_scattering_implies_herglotz` | TVE Contact Reduction | The causal bound $\mathrm{Re}(\rho) \le 1$ forces the Reeb flow to satisfy the Herglotz condition [2]. |
-| `clay_reduces_to_herglotz` | Entire Function Theory | Classical equivalence between the Herglotz condition and $\mathrm{Re}(\rho) = 1/2$ [2]. |
 
 ---
 
@@ -135,25 +127,17 @@ In Lean 4, formal rigor is determined by the output of the `#print axioms` comma
 ### Build Steps
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/TruthXVector/TVE-Formalization.git](https://github.com/TruthXVector/TVE-Formalization.git)
-   cd TVE-Formalization
-   ```
+<pre><code>git clone [https://github.com/TruthXVector/TVE-Formalization.git](https://github.com/TruthXVector/TVE-Formalization.git)
+cd TVE-Formalization</code></pre>
 
 2. **Fetch dependencies:**
-   ```bash
-   lake exe cache get
-   ```
+<pre><code>lake exe cache get</code></pre>
 
 3. **Verify the entire repository:**
-   ```bash
-   lake build
-   ```
+<pre><code>lake build</code></pre>
 
 4. **Verify the Riemann Hypothesis master theorem directly:**
-   ```bash
-   lake build TVE.RHCollapse
-   ```
+<pre><code>lake build TVE.RHCollapse</code></pre>
 
 ---
 
