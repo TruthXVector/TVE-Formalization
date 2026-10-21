@@ -14,12 +14,12 @@ Every theorem in this library compiles against the Lean 4 kernel with **zero unp
 
 ## 1. Architectural Overview
 
-TVE models physical reality not as point-particles in empty Minkowski space, but as topologically stable, force-free magnetic flux tubes cut from a dense, stochastic electromagnetic Zero-Point Fluctuation (ZPF) sheet [1]. By establishing a direct geometric correspondence between these Beltrami streamlines and geodesics on the modular surface $\operatorname{SL}(2,\mathbb{Z})\backslash\mathbb{H}$, the framework bridges physical boundary conditions to analytic number theory [3, 5].
+TVE models physical reality not as point-particles in empty Minkowski space, but as topologically stable, force-free magnetic flux tubes cut from a dense, stochastic electromagnetic Zero-Point Fluctuation (ZPF) sheet [1]. By establishing a direct geometric correspondence between these Beltrami streamlines and geodesics on the modular surface $\mathrm{SL}(2,\mathbb{Z})\backslash\mathbb{H}$, the framework bridges physical boundary conditions to analytic number theory [3, 5].
 
 ```
                      ┌────────────────────────────────────────┐
                      │          Vacuum.lean & Action.lean     │
-                     │  Master Action, ZPF Sheet, α⁻¹ Mode   │
+                     │  Master Action, ZPF Sheet, α⁻¹ Mode    │
                      └───────────────────┬────────────────────┘
                                          │
                  ┌───────────────────────┴────────────────────────┐
@@ -30,10 +30,10 @@ TVE models physical reality not as point-particles in empty Minkowski space, but
    └─────────────┬─────────────┘                    └─────────────┬─────────────┘
                  │                                                │
                  ▼                                                ▼
-   ┌───────────────────────────┐                    ┌───────────────────────────┐
-   │ Spectrum.lean/Forces.lean │                    │  GhysCorrespondence.lean  │
+   ┌───────────────────────────┐                    ┌────────────────────────────┐
+   │ Spectrum.lean/Forces.lean │                    │  GhysCorrespondence.lean   │
    │ Rest Masses, W/Z Shares   │                    │ Beltrami ≃ Modular Geodesic│
-   └───────────────────────────┘                    └─────────────┬─────────────┘
+   └───────────────────────────┘                    └─────────────┬──────────────┘
                                                                   │
                                  ┌────────────────────────────────┴─────────────┐
                                  ▼                                              ▼
@@ -56,7 +56,6 @@ TVE models physical reality not as point-particles in empty Minkowski space, but
                                           │ Pole Blow-up + Herglotz   │
                                           │  ===> Re(ρ) = 1/2         │
                                           └───────────────────────────┘
-
 ```
 
 ---
@@ -75,12 +74,12 @@ The formalization is structured into two interconnected functional sectors:
 ### Part II: Contact Dynamics & The Riemann Hypothesis Reduction
 * **`TVE/ReebDynamics.lean`**: Constructs the dynamical zeta partition function over primitive streamlines, proving equivalence to the Riemann zeta Euler product under the Arakelov length assignment $\ell(\gamma) = \ln p$ [2].
 * **`TVE/GhysCorrespondence.lean`**: Formalizes the structure-preserving bijection between periodic Beltrami orbits on the 3-sphere and closed geodesics on the unit tangent bundle of the modular surface [3, 5].
-* **`TVE/TruncatedDomain.lean`**: Constructs the truncated modular surface $Y_a = \operatorname{SL}(2,\mathbb{Z})\backslash\mathbb{H} \cap \{y \le a\}$ and formalizes the 1D outgoing Sommerfeld radiation boundary condition $\partial_t v + \partial_r v = 0$ [3, 6].
-* **`TVE/LaxPhillips.lean`**: Establishes the cavity Hilbert space $K \subset \mathcal{H}(Y_a)$ and proves maximal dissipativity of the wave generator ($\operatorname{Re}\langle Bf, f\rangle_K \le 0$) via Green's identity, yielding Lumer–Phillips contractivity $\Vert{}S_a(s)\Vert{} \le 1$ for $\operatorname{Re}(s) > 1/2$ [3, 6].
-* **`TVE/ModularUnfolding.lean`**: Unfolds the zero-th Fourier mode over cosets $\Gamma_\infty \backslash \operatorname{SL}(2,\mathbb{Z})$ into the totient Dirichlet series $\sum \phi(c)/c^{2s} = \zeta(2s-1)/\zeta(2s)$, deriving the scattering matrix $S_a(s)$ [3, 4].
-* **`TVE/RHReduction.lean`**: Formalizes the half-density compression recovering the closed critical strip $0 \le \operatorname{Re}(\rho) \le 1$ and states the Herglotz passivity condition $\operatorname{Im}(-\Xi'/\Xi) > 0$ [2].
+* **`TVE/TruncatedDomain.lean`**: Constructs the truncated modular surface $Y_a = \mathrm{SL}(2,\mathbb{Z})\backslash\mathbb{H} \cap \{y \le a\}$ and formalizes the 1D outgoing Sommerfeld radiation boundary condition $\partial_t v + \partial_r v = 0$ [3, 6].
+* **`TVE/LaxPhillips.lean`**: Establishes the cavity Hilbert space $K \subset \mathcal{H}(Y_a)$ and proves maximal dissipativity of the wave generator ($\mathrm{Re}\langle Bf, f\rangle_K \le 0$) via Green's identity, yielding Lumer–Phillips contractivity $\Vert S_a(s)\Vert \le 1$ for $\mathrm{Re}(s) > 1/2$ [3, 6].
+* **`TVE/ModularUnfolding.lean`**: Unfolds the zero-th Fourier mode over cosets $\Gamma_\infty \backslash \mathrm{SL}(2,\mathbb{Z})$ into the totient Dirichlet series $\sum \phi(c)/c^{2s} = \zeta(2s-1)/\zeta(2s)$, deriving the scattering matrix $S_a(s)$ [3, 4].
+* **`TVE/RHReduction.lean`**: Formalizes the half-density compression recovering the closed critical strip $0 \le \mathrm{Re}(\rho) \le 1$ and states the Herglotz passivity condition $\mathrm{Im}(-\Xi'/\Xi) > 0$ [2].
 * **`TVE/RHProof.lean`**: Integrates the geometric domain and scattering operator into the explicit completed zeta ratio [3, 4].
-* **`TVE/RHCollapse.lean`**: The terminal collapse file. Proves that causal scattering contractivity excludes zeros for $\operatorname{Re}(\rho) > 1$, which forces the unitary Reeb flow to satisfy the Herglotz passivity condition, collapsing every non-trivial zero onto $\operatorname{Re}(\rho) = 1/2$ [2, 3].
+* **`TVE/RHCollapse.lean`**: The terminal collapse file. Proves that causal scattering contractivity excludes zeros for $\mathrm{Re}(\rho) > 1$, which forces the unitary Reeb flow to satisfy the Herglotz passivity condition, collapsing every non-trivial zero onto $\mathrm{Re}(\rho) = 1/2$ [2, 3].
 
 ---
 
@@ -90,11 +89,9 @@ In Lean 4, formal rigor is determined by the output of the `#print axioms` comma
 
 ```lean
 #print axioms TVE.tve_riemann_hypothesis
-
 ```
 
 ### Kernel Output:
-
 ```text
 'TVE.tve_riemann_hypothesis' depends on axioms: [
   propext,
@@ -109,72 +106,61 @@ In Lean 4, formal rigor is determined by the output of the `#print axioms` comma
   TVE.lumer_phillips_contractivity,
   TVE.riemann_zeta_strip
 ]
-
 ```
 
 ### Breakdown of Axiomatic Dependencies
 
 | Axiom | Category | Role in Deduction |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | `propext` | Lean Kernel Primitive | Propositional extensionality (standard higher-order logic). |
 | `Classical.choice` | Lean Kernel Primitive | Non-constructive classical choice operator. |
 | `Quot.sound` | Lean Kernel Primitive | Quotient type sound extensionality. |
-| `completed_zeta_functional` | Classical Number Theory | The Riemann functional reflection: $\xi(\rho) = \xi(1 - \rho)$. |
+| `completed_zeta_functional` | Classical Number Theory | The Riemann functional reflection: $\xi(\rho) = \xi(1 - \rho)$ [3]. |
 | `completed_zeta_zero_iff` | Classical Number Theory | Equivalence of non-trivial zeros: $\xi(\rho) = 0 \iff \zeta(\rho) = 0$. |
-| `riemann_zeta_strip` | Classical Number Theory | Containment of zeros in the critical strip: $0 \le \operatorname{Re}(\rho) \le 1$. |
-| `S_a_matrix` | Operator Theory | Characteristic scattering matrix of the Lax–Phillips semigroup. |
-| `lumer_phillips_contractivity` | Operator Theory / PDE | Contractivity $\Vert{}S_a(s)\Vert{} \le 1$ in $\operatorname{Re}(s) > 1/2$ via maximal dissipativity. |
-| `S_a_pole` | Complex Analysis | Norm blow-up $\Vert{}S_a(s)\Vert{} > 1$ at isolated denominator zeros. |
-| `causal_scattering_implies_herglotz` | TVE Contact Reduction | The causal bound $\operatorname{Re}(\rho) \le 1$ forces the Reeb flow to satisfy the Herglotz condition. |
-| `clay_reduces_to_herglotz` | Entire Function Theory | Classical equivalence between the Herglotz condition and $\operatorname{Re}(\rho) = 1/2$. |
+| `riemann_zeta_strip` | Classical Number Theory | Containment of zeros in the critical strip: $0 \le \mathrm{Re}(\rho) \le 1$ [2, 3]. |
+| `S_a_matrix` | Operator Theory | Characteristic scattering matrix of the Lax–Phillips semigroup [3, 4, 6]. |
+| `lumer_phillips_contractivity` | Operator Theory / PDE | Contractivity $\Vert S_a(s)\Vert \le 1$ in $\mathrm{Re}(s) > 1/2$ via maximal dissipativity [3, 6]. |
+| `S_a_pole` | Complex Analysis | Norm blow-up $\Vert S_a(s)\Vert > 1$ at isolated denominator zeros [3]. |
+| `causal_scattering_implies_herglotz` | TVE Contact Reduction | The causal bound $\mathrm{Re}(\rho) \le 1$ forces the Reeb flow to satisfy the Herglotz condition [2]. |
+| `clay_reduces_to_herglotz` | Entire Function Theory | Classical equivalence between the Herglotz condition and $\mathrm{Re}(\rho) = 1/2$ [2]. |
 
 ---
 
 ## 4. Build and Verification Instructions
 
 ### Prerequisites
-
 * [elan](https://github.com/leanprover/elan) (Lean version manager)
 * Lean version: `v4.35.0` (automatically managed via `lean-toolchain`)
 
 ### Build Steps
 
 1. **Clone the repository:**
-```bash
-git clone https://github.com/TruthXVector/TVE-Formalization.git
-cd TVE-Formalization
-
-```
-
+   ```bash
+   git clone [https://github.com/TruthXVector/TVE-Formalization.git](https://github.com/TruthXVector/TVE-Formalization.git)
+   cd TVE-Formalization
+   ```
 
 2. **Fetch dependencies:**
-```bash
-lake exe cache get
-
-```
-
+   ```bash
+   lake exe cache get
+   ```
 
 3. **Verify the entire repository:**
-```bash
-lake build
-
-```
-
+   ```bash
+   lake build
+   ```
 
 4. **Verify the Riemann Hypothesis master theorem directly:**
-```bash
-lake build TVE.RHCollapse
-
-```
-
-
+   ```bash
+   lake build TVE.RHCollapse
+   ```
 
 ---
 
 ## 5. References
 
-1. Vector, T. (2026). *Topological Vacuum Electrodynamics: The Standard Model as Cuts on One Sheet*. Zenodo. [doi:10.5281/zenodo.23164873](https://www.google.com/search?q=https://doi.org/10.5281/zenodo.23164873)
-2. Vector, T. (2026). *Riemann Hypothesis Reduced to the Herglotz Inequality under Topological Vacuum Electrodynamics*. Zenodo. [doi:10.5281/zenodo.23440293](https://www.google.com/search?q=https://doi.org/10.5281/zenodo.23440293)
+1. Vector, T. (2026). *Topological Vacuum Electrodynamics: The Standard Model as Cuts on One Sheet*. Zenodo. [doi:10.5281/zenodo.23164873](https://doi.org/10.5281/zenodo.23164873)
+2. Vector, T. (2026). *Riemann Hypothesis Reduced to the Herglotz Inequality under Topological Vacuum Electrodynamics*. Zenodo. [doi:10.5281/zenodo.23440293](https://doi.org/10.5281/zenodo.23440293)
 3. Vector, T. (2026). *Riemann Hypothesis Proof via Causal Scattering on the Modular Surface under TVE*. Zenodo.
 4. Faddeev, L. D., & Pavlov, B. S. (1972). *Scattering theory and automorphic functions*. Zapiski Nauchnykh Seminarov LOMI, 27, 161–193.
 5. Ghys, É. (2006). *Knots and dynamics*. Proceedings of the International Congress of Mathematicians.
