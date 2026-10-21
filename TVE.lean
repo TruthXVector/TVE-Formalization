@@ -18,6 +18,9 @@ import TVE.BSD.MordellWeilKernel
 import TVE.BSD.AnalyticTorsion
 import TVE.YangMills.BeltramiConfinement
 import TVE.YangMills.MassGap
+import TVE.Cosmology.CosmicTopology
+import TVE.Cosmology.CosmicRelaxation
+import TVE.Cosmology.CosmicStructures
 
 set_option linter.style.whitespace false
 set_option linter.style.longLine false
