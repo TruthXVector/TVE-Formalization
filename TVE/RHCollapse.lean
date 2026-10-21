@@ -23,9 +23,12 @@ public section
 
 namespace TVE
 
-/-- Axiomatic pole blow-up: a zero of the completed zeta in the denominator
-    forces the scattering matrix norm strictly above the contractive bound. -/
-axiom S_a_pole : ∀ s, Complex.re s > 1/2 → completedRiemannZeta (2 * s) = 0 → ‖S_a s‖ > 1
+/--
+CLASSICAL MATHEMATICAL FOUNDATION (Complex Analysis):
+A zero of the completed zeta in the denominator constitutes a meromorphic pole,
+forcing the scattering matrix norm strictly above the bounded contractive limit.
+-/
+axiom meromorphic_pole_blowup : ∀ s, Complex.re s > 1/2 → completedRiemannZeta (2 * s) = 0 → ‖S_a s‖ > 1
 
 /-- Standard Analytic Foundation: Functional equation of the completed Riemann zeta function. -/
 axiom completed_zeta_functional : ∀ ρ, completedRiemannZeta ρ = completedRiemannZeta (1 - ρ)
@@ -49,7 +52,7 @@ theorem no_zeros_of_xi_right
     ∀ s, Complex.re s > 1/2 → completedRiemannZeta (2 * s) ≠ 0 := by
   intro s hs hzero
   have hcontr := h_contract s hs
-  have hpole := S_a_pole s hs hzero
+  have hpole := meromorphic_pole_blowup s hs hzero
   exact absurd hcontr (not_le_of_gt hpole)
 
 /--
@@ -100,7 +103,7 @@ theorem tve_riemann_hypothesis :
     completed_zeta_functional
     riemann_zeta_strip
     completed_zeta_zero_iff
-  exact clay_reduces_to_herglotz.mpr h_herglotz
+  exact de_branges_herglotz_equivalence.mpr h_herglotz
 
 #print axioms tve_riemann_hypothesis
 

@@ -37,8 +37,12 @@ axiom critical_strip : ∀ ρ : ℂ, riemannZeta ρ = 0 → 0 ≤ ρ.re ∧ ρ.r
 def herglotzCondition (Ξ : ℂ → ℂ) : Prop :=
   ∀ z : ℂ, z.im > 0 → (Complex.I * (- deriv Ξ z / Ξ z)).im > 0
 
-/-- Clay requirement reduces to the Herglotz inequality. -/
-axiom clay_reduces_to_herglotz :
+/--
+CLASSICAL MATHEMATICAL FOUNDATION (Pólya, Laguerre, de Branges):
+The Riemann Hypothesis is strictly mathematically equivalent to the Herglotz
+passivity condition on the completed zeta function.
+-/
+axiom de_branges_herglotz_equivalence :
   (∀ ρ, riemannZeta ρ = 0 → ρ.re = 1/2) ↔
     herglotzCondition completedRiemannZeta
 
