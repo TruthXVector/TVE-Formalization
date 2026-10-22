@@ -87,12 +87,19 @@ Evaluates the Lax–Phillips operator at the static spectral threshold $s=1$ ($\
 Non-Abelian gauge fields emerge via the Faddeev–Niemi–Cho decomposition of braided Beltrami tubes. Competing helicity pressure $P = \xi/a^4$ and vacuum tension $\sqrt{\sigma}$ evades Derrick's scaling collapse, fixing an equilibrium radius. Arnold's ergodic helicity bound establishes a strictly positive classical gap $\Delta_{\mathrm{cl}} > 0$, while Kato–Rellich perturbation against $e^{-\alpha^{-1}}$ instanton tunneling proves the quantum mass gap $\Delta > 0$.
 ```lean
 'TVE.tve_yang_mills_mass_gap' depends on axioms: [
-  propext, Classical.choice, Quot.sound, 
-  TVE.Delta_cl, TVE.Delta_cl_strictly_positive, 
-  TVE.kato_rellich_instanton_bound, TVE.quantum_mass_gap
+  propext, Classical.choice, Quot.sound
 ]
 ```
-
+```lean
+'TVE.derrick_evasion_equilibrium' depends on axioms: [
+  propext, Classical.choice, Quot.sound
+]
+```
+```lean
+'TVE.equilibrium_stability_curvature' depends on axioms: [
+  propext, Classical.choice, Quot.sound
+]
+```
 ---
 
 ## 2. Pillar II: Zero-Parameter Cosmological Identities
