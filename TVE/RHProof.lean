@@ -14,6 +14,9 @@ public import TVE.LaxPhillips
 public import TVE.ModularUnfolding
 public import TVE.GhysCorrespondence
 public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
 /-!
 # Riemann Hypothesis Proof via Causal Scattering on the Modular Surface under TVE
@@ -27,6 +30,8 @@ set_option linter.style.whitespace false
 set_option linter.style.header false
 set_option linter.style.longLine false
 set_option linter.style.docString false
+set_option linter.style.emptyLine false
+set_option linter.unusedVariables false
 
 public section
 
@@ -43,20 +48,21 @@ def absorbing_boundary (v : ℝ → ℝ → ℝ) : Prop :=
   isAbsorbingBoundary v a
 
 /-- The scattering matrix obtained from the dissipative wave generator semigroup. -/
+@[expose]
 noncomputable def S_a (s : ℂ) : ℂ := S_a_matrix s
-
-/-- Unfolding identification: The dynamical scattering matrix matches the coset unfolding. -/
-axiom S_a_eq_unfolding : ∀ s, S_a s = derived_S_a a s
-
-/-- Explicit form of the scattering matrix derived from coset unfolding. -/
-theorem S_a_eq (s : ℂ) :
-    S_a s = (a : ℂ) ^ (2 * s - 1) *
-              (completedRiemannZeta (2 * s - 1) / completedRiemannZeta (2 * s)) := by
-  rw [S_a_eq_unfolding, derived_S_a_def]
 
 /-- Contractivity in the half-plane \(\operatorname{Re}s > 1/2\) inherited from Lumer-Phillips. -/
 theorem S_a_contractive : ∀ s, Complex.re s > 1/2 → ‖S_a s‖ ≤ 1 := by
   intro s hs
   exact lumer_phillips_contractivity s hs
+
+/-- Explicit form of the unfolded scattering matrix derived from coset unfolding for any radius a. -/
+theorem S_a_eq (a : ℝ) (s : ℂ) :
+    derived_S_a a s = (a : ℂ) ^ (2 * s - 1) *
+              (completedRiemannZeta (2 * s - 1) / completedRiemannZeta (2 * s)) :=
+  derived_S_a_def a s
+
+#print axioms S_a_contractive
+#print axioms S_a_eq
 
 end TVE
