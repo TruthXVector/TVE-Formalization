@@ -8,7 +8,7 @@
 
 A machine-checked Lean 4 formalization of **Topological Vacuum Electrodynamics (TVE)** [1, 3]. 
 
-This repository formalizes a single, continuous, zero-free-parameter physical substrate—grounded in stochastic vacuum electrodynamics, Miller–Turner force-free Beltrami flux tubes, and contact geometry [1, 3, 5]—and verifies its direct deductive reduction of **Four Millennium Mathematical Problems**, **The Wolfram Rule 30 Prize**, and **Five Observational Cosmological Crises** [2, 4, 6].
+This repository formalizes a single, continuous, zero-free-parameter physical substrate—grounded in stochastic vacuum electrodynamics, Miller–Turner force-free Beltrami flux tubes, and contact geometry [1, 3, 5]—and verifies its direct deductive reduction of **Four Millennium Mathematical Problems** and **Five Observational Cosmological Crises** [2, 4, 6].
 
 Every theorem in this library compiles against the Lean 4 kernel with **zero unproven `sorry` obligations** across 3,275 build jobs.
 
@@ -126,13 +126,7 @@ Non-Abelian gauge fields emerge via the Faddeev–Niemi–Cho decomposition of b
 
 ## 2. Pillar II: The Wolfram Rule 30 Prize (`TVE/Rule30/`)
 
-**Status: 100% Verified. Computational Irreducibility is Purely Constructive.**
-
-Resolves the three $30,000 Wolfram Prize questions natively in Lean 4 by translating the discrete $\{0, 1\}$ cellular automaton into a continuous, left-permutative transfer operator $U$ acting on the $\{1, -1\}$ spin Cantor space.
-
-* **Problem 1 (Non-Periodicity):** Proves the continuous spectrum of the transfer operator strictly rules out discrete rational eigenvalues, algebraically forbidding cyclic periodic orbits.
-* **Problem 2 (Equidistribution):** Proves the operator is measure-preserving on the local balanced fibers. By von Neumann's Mean Ergodic Theorem, the asymptotic spatial expectation converges to the uniform Bernoulli mean (0), yielding an exact active limiting density of $1/2$.
-* **Problem 3 (Computational Irreducibility):** Evaluates strictly to **zero axioms**. Proves that dissipative information compression ($\mathrm{spinOR}$ non-injectivity), cubic spatial mode coupling, and maximal left-causal wavefront velocity ($v_L = 1$) formally obstruct sub-linear evaluation shortcuts, enforcing an irreducible $\Omega(n)$ serial depth lower bound.
+**Status: Under construction.**
 
 ```lean
 'TVE.Rule30.tve_rule30_nonperiodic' depends on axioms: [
