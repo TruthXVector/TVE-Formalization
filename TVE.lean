@@ -11,10 +11,6 @@ import TVE.LaxPhillips
 import TVE.RHReduction
 import TVE.RHProof
 import TVE.RHCollapse
-import TVE.Rule30.CantorSpace
-import TVE.Rule30.TransferOperator
-import TVE.Rule30.Ergodicity
-import TVE.Rule30.Irreducibility
 import TVE.GrandRH.CongruenceDomain
 import TVE.GrandRH.AutomorphicScattering
 import TVE.GrandRH.GrandRHCollapse
