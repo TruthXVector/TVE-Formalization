@@ -249,6 +249,8 @@ Running `lake build` verifies `#print axioms` across every capstone theorem in t
 
 ---
 
+Manuscripts: https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22Vector%2C%20Truth%22&l=list&p=1&s=10&sort=bestmatch
+
 ## License & Citation
 
 Copyright © 2026 Truth Vector. Released under the **Apache 2.0 License** (see `LICENSE` for details).
