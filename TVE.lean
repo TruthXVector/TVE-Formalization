@@ -11,6 +11,10 @@ import TVE.LaxPhillips
 import TVE.RHReduction
 import TVE.RHProof
 import TVE.RHCollapse
+import TVE.Rule30.CantorSpace
+import TVE.Rule30.TransferOperator
+import TVE.Rule30.Ergodicity
+import TVE.Rule30.Irreducibility
 import TVE.GrandRH.CongruenceDomain
 import TVE.GrandRH.AutomorphicScattering
 import TVE.GrandRH.GrandRHCollapse
@@ -24,6 +28,43 @@ import TVE.YangMills.FNCCoercivity
 import TVE.Cosmology.CosmicTopology
 import TVE.Cosmology.CosmicRelaxation
 import TVE.Cosmology.CosmicStructures
+import TVE.Poincare.NeckStability
+import TVE.Poincare.DynamicRelaxation
+import TVE.Poincare.Poincare3D
+import TVE.Poincare.SmoothPoincare4D
+import TVE.Poincare.GluckTwistElimination
+import TVE.Poincare.PerelmanEntropyEquivalence
+import TVE.Poincare.GeneralizedSphereTheorem
+import TVE.NavierStokes.BeltramiDepletion
+import TVE.NavierStokes.VortexCoreFloor
+import TVE.NavierStokes.EnstrophySobolev
+import TVE.NavierStokes.BealeKatoMajda
+import TVE.NavierStokes.OnsagerKolmogorov
+import TVE.NavierStokes.CrossHelicityMHD
+import TVE.NavierStokes.VectorCalculusBridge
+import TVE.NavierStokes.MeasureL2Bridge
+import TVE.NavierStokes.ClassicalMillenniumClosure
+import TVE.Complexity.LandauerDiode
+import TVE.Complexity.TopologicalFrustration
+import TVE.Complexity.SemigroupComplexity
+import TVE.Complexity.PneNP
+import TVE.Complexity.CookLevinBridge
+import TVE.Hodge.KaehlerBeltrami
+import TVE.Hodge.ChernSimonsQuantization
+import TVE.Hodge.ChowGagaTruncation
+import TVE.Hodge.HodgeConjecture
+import TVE.MillenniumBridge.RiemannClayBridge
+import TVE.MillenniumBridge.BSDClayBridge
+import TVE.MillenniumBridge.YangMillsWightmanBridge
+import TVE.MillenniumBridge.PoincareHodgeBridge
+import TVE.MillenniumBridge.MathlibZetaTotientBridge
+import TVE.MillenniumBridge.RealCalculusPDEBridge
+import TVE.MillenniumBridge.InductiveTseitinCircuitBridge
+import TVE.MillenniumBridge.HilbertOperatorVariationalBridge
+import TVE.MillenniumBridge.SevenMillenniumMaster
+import TVE.QuantumSubsumption
+import TVE.GeneralRelativitySubsumption
+import TVE.CircularKernel
 
 set_option linter.style.whitespace false
 set_option linter.style.longLine false
