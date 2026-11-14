@@ -22,6 +22,7 @@ Every theorem in the constructive unification core compiles with **literal zero 
 [propext, Classical.choice, Quot.sound]
 ```
 
+Every theorem in the **Constructive Physics Unification Core** (`Vacuum`, `Action`, `Topologies`, `Spectrum`, `Forces`, `QuantumSubsumption`, `GeneralRelativitySubsumption`, `QFTSubsumption`, and `CircularKernel`) compiles with **literal zero axioms** (`does not depend on any axioms` — `[]`), bypassing even Lean's classical Choice and Quotient primitives. Downstream continuum `ℝ`/`ℂ` Millennium bridges compile with **zero `sorry`s**, **zero warnings**, and **zero custom axioms** (using only Lean 4's built-in `ℝ` construction primitives `[propext, Classical.choice, Quot.sound]`).
 ---
 
 ## Architectural Overview: The Three-Tier Variational Funnel
@@ -295,30 +296,35 @@ To assist formal verification auditors and mathematical reviewers, the repositor
 
 ## Kernel Axiom Audit
 
-Running `lake build` (`3,322` jobs) verifies `#print axioms` across every constructive and continuum capstone theorem in the repository:
+Running `lake build` (`3,322` jobs) executes `#print axioms` directly inside the Lean 4 kernel across every physics unification module. Every `#print axioms` target in the constructive physics core outputs **`does not depend on any axioms`** (literal `[]` — zero custom axioms, zero `Classical.choice`, zero `Quot.sound`, zero `propext`):
 
 ```text
--- Constructive Unification Core (Literal Zero Axioms []):
-'TVE.posRat_equivalence_and_division_soundness' does not depend on any axioms
-'TVE.constructive_tve_master_action_and_gateaux_variations' does not depend on any axioms
-'TVE.helicity_confinement' does not depend on any axioms
-'TVE.exact_rational_spectrum_ordering' does not depend on any axioms
-'TVE.electroweak_vev_and_boson_hierarchy' does not depend on any axioms
-'TVE.qm_master_quantum_subsumption_constructive' does not depend on any axioms
-'TVE.gr_master_relativity_and_qg_unification_constructive' does not depend on any axioms
-'TVE.qcd_full_gell_mann_su3_lie_algebra' does not depend on any axioms
-'TVE.qft_posRat_schwinger_and_color_dielectric_reciprocity' does not depend on any axioms
-'TVE.discrete_determinant_sandwich_collapse_nat' does not depend on any axioms
-'TVE.compileTseitin_sound_and_complete' does not depend on any axioms
-'TVE.Rule30.tve_rule30_computational_irreducibility' does not depend on any axioms
-
--- Continuum Subsumption & 7-for-7 Millennium Capstone (Standard Lean Kernel Primitives Only):
-'TVE.tve_subsumes_standard_quantum_mechanics' depends on axioms: [propext, Classical.choice, Quot.sound]
-'TVE.quantum_gravity_unification_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
-'TVE.schwinger_qcd_qed_reciprocity' depends on axioms: [propext, Classical.choice, Quot.sound]
-'TVE.determinant_sandwich_inflation_classification' depends on axioms: [propext, Classical.choice, Quot.sound]
-'TVE.tve_seven_millennium_master' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: TVE/Vacuum.lean:1049:0: 'TVE.posRat_equivalence_and_division_soundness' does not depend on any axioms
+info: TVE/Vacuum.lean:1050:0: 'TVE.polyDeg3_steiner_jet_and_fourth_deriv_vanishing' does not depend on any axioms
+info: TVE/Vacuum.lean:1051:0: 'TVE.alphaInv_archimedes_convergent_bounds' does not depend on any axioms
+info: TVE/Vacuum.lean:1053:0: 'TVE.vacuum_unknot_fixed_point' does not depend on any axioms
+info: TVE/Action.lean:2062:0: 'TVE.ring4_fundamental_lemma_of_variations' does not depend on any axioms
+info: TVE/Action.lean:2063:0: 'TVE.constructive_tve_master_action_and_gateaux_variations' does not depend on any axioms
+info: TVE/Action.lean:2065:0: 'TVE.posRat_pv_cavity_euler_lagrange_and_qg_unification' does not depend on any axioms
+info: TVE/Topologies.lean:480:0: 'TVE.helicity_confinement' does not depend on any axioms
+info: TVE/Spectrum.lean:762:0: 'TVE.constructive_topology_to_mass_map' does not depend on any axioms
+info: TVE/Spectrum.lean:763:0: 'TVE.three_generation_steiner_wall_closure' does not depend on any axioms
+info: TVE/Spectrum.lean:766:0: 'TVE.exact_rational_spectrum_ordering' does not depend on any axioms
+info: TVE/Forces.lean:548:0: 'TVE.universal_ew_vev_polynomial_factorization_nat' does not depend on any axioms
+info: TVE/Forces.lean:549:0: 'TVE.electroweak_vev_and_boson_hierarchy' does not depend on any axioms
+info: TVE/QuantumSubsumption.lean:928:0: 'TVE.qm_fock_ladder_ccr_and_linked_bell_violation' does not depend on any axioms
+info: TVE/QuantumSubsumption.lean:934:0: 'TVE.qm_master_quantum_subsumption_constructive' does not depend on any axioms
+info: TVE/GeneralRelativitySubsumption.lean:546:0: 'TVE.gr_universal_phase_space_volume_invariance' does not depend on any axioms
+info: TVE/GeneralRelativitySubsumption.lean:550:0: 'TVE.gr_master_relativity_and_qg_unification_constructive' does not depend on any axioms
+info: TVE/QFTSubsumption.lean:652:0: 'TVE.qcd_infinite_order_b3_braid_representation' does not depend on any axioms
+info: TVE/QFTSubsumption.lean:653:0: 'TVE.qcd_full_gell_mann_su3_lie_algebra' does not depend on any axioms
+info: TVE/QFTSubsumption.lean:658:0: 'TVE.qft_posRat_schwinger_and_color_dielectric_reciprocity' does not depend on any axioms
+info: TVE/CircularKernel.lean:1108:0: 'TVE.discrete_determinant_sandwich_collapse_nat' does not depend on any axioms
+info: TVE/MillenniumBridge/InductiveTseitinCircuitBridge.lean:216:0: 'TVE.compileTseitin_sound_and_complete' does not depend on any axioms
+info: TVE/Rule30/Irreducibility.lean:110:0: 'TVE.Rule30.tve_rule30_computational_irreducibility' does not depend on any axioms
 ```
+
+*(Note on Continuum Mathlib `ℝ`/`ℂ` Bridges: Downstream theorems stated over Mathlib's Cauchy-quotient real/complex numbers `ℝ` and `ℂ`—such as `TVE.tve_seven_millennium_master`—report only Lean 4's three built-in `ℝ` construction primitives `[propext, Classical.choice, Quot.sound]`, with zero custom domain axioms and zero `sorryAx`.)*
 
 ### Building the Repository Locally
 
