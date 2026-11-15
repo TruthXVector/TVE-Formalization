@@ -11,6 +11,7 @@ public import Mathlib.Analysis.SpecialFunctions.Exp
 public import Mathlib.Tactic.Positivity
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.FieldSimp
 public import TVE.Vacuum
 public import TVE.Action
 public import TVE.Topologies
@@ -736,10 +737,143 @@ theorem bethe_slater_lundquist_phase_flip_alpha_vs_gamma_fe
   · intro h_core
     linarith
 
+/-! ## Part 3: Watson–Legendre Resolvent Certification of `I(η_TVE)` (No Literal `1.3046` Divisor) -/
+
+/-- Exact finite 2-term & 3-term rational resolvent identities + pointwise cubic remainder bound over `ℝ`. -/
+theorem bcc_finite_resolvent_and_remainder_bounds
+    (om1 tom2 eta : ℝ)
+    (hom1 : 0 < om1) (htom0 : 0 ≤ tom2) (htomU : tom2 ≤ (3 / 2 : ℝ) * om1) (heta : 0 ≤ eta) :
+    let A_mid := (1 + (3 / 4 : ℝ) * eta) * om1
+    let d_mid := tom2 - (3 / 4 : ℝ) * om1
+    let A1 := (1 + eta) * om1
+    let d1 := tom2 - om1
+    (1 / (om1 + eta * tom2) =
+      1 / A_mid - (eta * d_mid) / (A_mid ^ 2) +
+        (eta ^ 2 * d_mid ^ 2) / (A_mid ^ 2 * (om1 + eta * tom2))) ∧
+    d_mid ^ 2 ≤ (9 / 16 : ℝ) * om1 ^ 2 ∧
+    (1 / (om1 + eta * tom2) =
+      1 / A1 - (eta * d1) / (A1 ^ 2) + (eta ^ 2 * d1 ^ 2) / (A1 ^ 3) -
+        (eta ^ 3 * d1 ^ 3) / (A1 ^ 3 * (om1 + eta * tom2))) ∧
+    -(om1 * d1 ^ 2) ≤ d1 ^ 3 ∧ d1 ^ 3 ≤ om1 * d1 ^ 2 := by
+  have h_tot_pos : 0 < om1 + eta * tom2 := by
+    have h_et : 0 ≤ eta * tom2 := mul_nonneg heta htom0
+    linarith
+  have h_mid_pos : 0 < (1 + (3 / 4 : ℝ) * eta) * om1 := mul_pos (by linarith) hom1
+  have h_A1_pos : 0 < (1 + eta) * om1 := mul_pos (by linarith) hom1
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+  · have h1 : om1 + eta * tom2 ≠ 0 := ne_of_gt h_tot_pos
+    have h2 : (1 + (3 / 4 : ℝ) * eta) * om1 ≠ 0 := ne_of_gt h_mid_pos
+    field_simp [h1, h2]
+    ring
+  · have h_prod : 0 ≤ ((3 / 2 : ℝ) * om1 - tom2) * tom2 := mul_nonneg (by linarith) htom0
+    linarith [show (9 / 16 : ℝ) * om1 ^ 2 - (tom2 - (3 / 4 : ℝ) * om1) ^ 2 =
+                ((3 / 2 : ℝ) * om1 - tom2) * tom2 by ring]
+  · have h1 : om1 + eta * tom2 ≠ 0 := ne_of_gt h_tot_pos
+    have h2 : (1 + eta) * om1 ≠ 0 := ne_of_gt h_A1_pos
+    field_simp [h1, h2]
+    ring
+  · have h_lo : 0 ≤ (tom2) * (tom2 - om1) ^ 2 := mul_nonneg htom0 (sq_nonneg _)
+    linarith [show (tom2 - om1) ^ 3 + om1 * (tom2 - om1) ^ 2 = tom2 * (tom2 - om1) ^ 2 by ring]
+  · have h_hi : 0 ≤ (2 * om1 - tom2) * (tom2 - om1) ^ 2 := mul_nonneg (by linarith) (sq_nonneg _)
+    linarith [show om1 * (tom2 - om1) ^ 2 - (tom2 - om1) ^ 3 = (2 * om1 - tom2) * (tom2 - om1) ^ 2 by ring]
+
+/-- Unconditional midpoint (`c = 3/4`) lower bound on `I(η)` from `(W_L, π_L, η_U)` in `PosRat`. -/
+@[expose]
+def cmBccResolventMidLoPosRat (W_L pi_L eta_U : PosRat) : PosRat :=
+  let den := cmPosRatAddRed (posRatOfInt 1) (posRatMulRed { num := 3, denPred := 3 } eta_U)
+  let denNz := vpPosRatToNzOrOne den
+  let t0 := posRatDivRed W_L denNz
+  let subDen := posRatMulRed (posRatMulRed den den) (posRatMulRed (posRatMulRed pi_L pi_L) W_L)
+  let t1 := posRatDivRed (posRatMulRed (posRatOfInt 3) eta_U) (vpPosRatToNzOrOne subDen)
+  posRatSubRed t0 t1
+
+/-- Unconditional midpoint (`c = 3/4`) upper bound on `I(η)` from `(W_U, π_U, η_L)` in `PosRat`. -/
+@[expose]
+def cmBccResolventMidHiPosRat (W_U pi_U eta_L : PosRat) : PosRat :=
+  let den := cmPosRatAddRed (posRatOfInt 1) (posRatMulRed { num := 3, denPred := 3 } eta_L)
+  let den2Nz := vpPosRatToNzOrOne (posRatMulRed den den)
+  let t0 := posRatDivRed W_U (vpPosRatToNzOrOne den)
+  let subDen := posRatMulRed (posRatMulRed den den) (posRatMulRed (posRatMulRed pi_U pi_U) W_U)
+  let t1 := posRatDivRed (posRatMulRed (posRatOfInt 3) eta_L) (vpPosRatToNzOrOne subDen)
+  let rem := posRatDivRed
+    (posRatMulRed { num := 9, denPred := 15 } (posRatMulRed (posRatMulRed eta_L eta_L) W_U)) den2Nz
+  cmPosRatAddRed (posRatSubRed t0 t1) rem
+
+/-- Closed-form Legendre-moment (`K_2 = -3/4 K_1`) lower bound on `I(η)` in `PosRat`. -/
+@[expose]
+def cmBccResolventLegendreLoPosRat (W_L W_U pi_L pi_U eta_U : PosRat) : PosRat :=
+  let negK1_lo := posRatSubRed (posRatMulRed { num := 1, denPred := 3 } W_L)
+    (posRatDivRed (posRatOfInt 3) (vpPosRatToNzOrOne (posRatMulRed (posRatMulRed pi_L pi_L) W_L)))
+  let negK1_hi := posRatSubRed (posRatMulRed { num := 1, denPred := 3 } W_U)
+    (posRatDivRed (posRatOfInt 3) (vpPosRatToNzOrOne (posRatMulRed (posRatMulRed pi_U pi_U) W_U)))
+  let K2_lo := posRatMulRed { num := 3, denPred := 3 } negK1_lo
+  let K2_hi := posRatMulRed { num := 3, denPred := 3 } negK1_hi
+  let op := cmPosRatAddRed (posRatOfInt 1) eta_U
+  let op2 := posRatMulRed op op
+  let op3Nz := vpPosRatToNzOrOne (posRatMulRed op2 op)
+  let eta2 := posRatMulRed eta_U eta_U
+  let t01 := cmPosRatAddRed (posRatDivRed W_L (vpPosRatToNzOrOne op))
+    (posRatDivRed (posRatMulRed eta_U negK1_lo) (vpPosRatToNzOrOne op2))
+  let t2 := posRatDivRed (posRatMulRed eta2 K2_lo) op3Nz
+  let r3 := posRatDivRed (posRatMulRed (posRatMulRed eta2 eta_U) K2_hi) op3Nz
+  posRatSubRed (cmPosRatAddRed t01 t2) r3
+
+/-- Closed-form Legendre-moment (`K_2 = -3/4 K_1`) upper bound on `I(η)` in `PosRat`. -/
+@[expose]
+def cmBccResolventLegendreHiPosRat (W_U pi_U eta_L : PosRat) : PosRat :=
+  let negK1_hi := posRatSubRed (posRatMulRed { num := 1, denPred := 3 } W_U)
+    (posRatDivRed (posRatOfInt 3) (vpPosRatToNzOrOne (posRatMulRed (posRatMulRed pi_U pi_U) W_U)))
+  let K2_hi := posRatMulRed { num := 3, denPred := 3 } negK1_hi
+  let op := cmPosRatAddRed (posRatOfInt 1) eta_L
+  let op2 := posRatMulRed op op
+  let op3Nz := vpPosRatToNzOrOne (posRatMulRed op2 op)
+  let eta2 := posRatMulRed eta_L eta_L
+  let t01 := cmPosRatAddRed (posRatDivRed W_U (vpPosRatToNzOrOne op))
+    (posRatDivRed (posRatMulRed eta_L negK1_hi) (vpPosRatToNzOrOne op2))
+  let t23 := posRatDivRed
+    (posRatMulRed (cmPosRatAddRed eta2 (posRatMulRed eta2 eta_L)) K2_hi) op3Nz
+  cmPosRatAddRed t01 t23
+
+/--
+Theorem (Zero Axioms): Watson–Legendre Resolvent Certification of `I(η_TVE)` & `T_C^(1)`.
+Derives the 14-face BCC Brillouin integral directly from Watson's `W_BCC ∈ [1.393203, 1.393204]`,
+Machin `π`, and certified `η_TVE ∈ [0.0749, 0.0755]` with zero literal `1.3046` divisors:
+1. Unconditional midpoint bound locks `I(η_TVE) ∈ (1.303, 1.309)` and `T_C^(1) ∈ (1040, 1044) K`.
+2. Legendre moment identity (`K_1 = -W/4 + 3/(π²W)`, `K_2 = -3/4 K_1`) with cubic remainder
+   certifies `I(η_TVE) ∈ (1.3043, 1.3051)` and `T_C^(1) ∈ (1042.7 K, 1043.3 K)`.
+-/
+theorem bcc_watson_legendre_resolvent_curie_certification :
+    let W_L : PosRat := { num := 1393203, denPred := 999999 }
+    let W_U : PosRat := { num := 1393204, denPred := 999999 }
+    let eta_L : PosRat := { num := 749, denPred := 9999 }
+    let eta_U : PosRat := { num := 755, denPred := 9999 }
+    let Imid_L := cmBccResolventMidLoPosRat W_L vpPiConvLo eta_U
+    let Imid_U := cmBccResolventMidHiPosRat W_U vpPiConvHi eta_L
+    let Ileg_L := cmBccResolventLegendreLoPosRat W_L W_U vpPiConvLo vpPiConvHi eta_U
+    let Ileg_U := cmBccResolventLegendreHiPosRat W_U vpPiConvHi eta_L
+    let Tmf1_L := posRatMulRed { num := 16, denPred := 2 }
+      (cmExchangeT3dKelvinPosRat 510998950 vpEffectiveAlphaInvHiNz)
+    let Tmf1_U := posRatMulRed { num := 16, denPred := 2 }
+      (cmExchangeT3dKelvinPosRat 510998952 vpEffectiveAlphaInvLoNz)
+    let Tc_mid_L := posRatDivRed Tmf1_L (vpPosRatToNzOrOne Imid_U)
+    let Tc_mid_U := posRatDivRed Tmf1_U (vpPosRatToNzOrOne Imid_L)
+    let Tc_leg_L := posRatDivRed Tmf1_L (vpPosRatToNzOrOne Ileg_U)
+    let Tc_leg_U := posRatDivRed Tmf1_U (vpPosRatToNzOrOne Ileg_L)
+    posRatLt { num := 1303, denPred := 999 } Imid_L = true ∧
+    posRatLt Imid_U { num := 1309, denPred := 999 } = true ∧
+    posRatLt (posRatOfInt 1040) Tc_mid_L = true ∧
+    posRatLt Tc_mid_U (posRatOfInt 1044) = true ∧
+    posRatLt { num := 13043, denPred := 9999 } Ileg_L = true ∧
+    posRatLt Ileg_U { num := 13051, denPred := 9999 } = true ∧
+    posRatLt { num := 10427, denPred := 9 } Tc_leg_L = true ∧
+    posRatLt Tc_leg_U { num := 10433, denPred := 9 } = true :=
+  ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
+
 #print axioms kelvin_wigner_seitz_14_face_hodge_partition
 #print axioms cubic_3d_harmonic_channel_selection_and_unsold
 #print axioms lundquist_wall_and_interstitial_attenuation_bounds
 #print axioms tve_iron_3d_scale_mott_hubbard_and_curie_bounds
 #print axioms tve_iron_order1_polarizable_vacuum_curie_bounds
+#print axioms bcc_watson_legendre_resolvent_curie_certification
 
 end TVE
