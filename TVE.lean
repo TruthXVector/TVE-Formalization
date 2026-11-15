@@ -65,6 +65,9 @@ import TVE.MillenniumBridge.SevenMillenniumMaster
 import TVE.QuantumSubsumption
 import TVE.GeneralRelativitySubsumption
 import TVE.CircularKernel
+import TVE.QFTSubsumption
+import TVE.CondensedMatter.IronFerromagnetism
+import TVE.VacuumPolarization
 
 set_option linter.style.whitespace false
 set_option linter.style.longLine false
