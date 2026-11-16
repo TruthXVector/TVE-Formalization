@@ -66,8 +66,12 @@ import TVE.QuantumSubsumption
 import TVE.GeneralRelativitySubsumption
 import TVE.CircularKernel
 import TVE.QFTSubsumption
-import TVE.CondensedMatter.IronFerromagnetism
 import TVE.VacuumPolarization
+import TVE.CondensedMatter.IronFerromagnetism
+import TVE.CondensedMatter.NickelFerromagnetism
+import TVE.CondensedMatter.CobaltFerromagnetism
+import TVE.CondensedMatter.GadoliniumFerromagnetism
+import TVE.ScaleUnification
 
 set_option linter.style.whitespace false
 set_option linter.style.longLine false
