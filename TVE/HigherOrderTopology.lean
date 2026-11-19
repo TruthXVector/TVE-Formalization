@@ -59,7 +59,7 @@ namespace TVE
 
 /-- Bridges a `3 × 3` `ColorMat3` (`QFTSubsumption.lean`) to `BioMat3Int` (`BiologicalDiode.lean`). -/
 @[expose]
-def colorMat3ToBioMat3 (M : ColorMat3) : BioMat3Int :=
+def hotColorMat3ToBioMat3 (M : ColorMat3) : BioMat3Int :=
   { a00 := M.r1.x, a01 := M.r1.y, a02 := M.r1.z,
     a10 := M.r2.x, a11 := M.r2.y, a12 := M.r2.z,
     a20 := M.r3.x, a21 := M.r3.y, a22 := M.r3.z }
@@ -70,7 +70,7 @@ diagonal entries are `-1` surgery framings and off-diagonal entries are the pair
 linking numbers `Lk_{12} = B.a01 = 0` and `Lk_{23} = B.a12 = 0` from `bioCommutator`.
 -/
 @[expose]
-def borromeanMinusOneSurgeryMat : ColorMat3 :=
+def hotBorromeanMinusOneSurgeryMat : ColorMat3 :=
   let B := bioCommutator bioGen1 bioGen1Inv bioGen2 bioGen2Inv
   { r1 := { x := -1,    y := B.a01, z := 0 },
     r2 := { x := B.a01, y := -1,    z := B.a12 },
@@ -109,9 +109,9 @@ theorem brieskorn_homology_sphere_trefoil_borromean_surgery :
     bin_tet_order * coset_idx5 = alphaInvPoly 3 ∧
     totalHelicityInt t = 1 ∧
     kirby_slope = totalHelicityInt t ∧
-    colorMatDet borromeanMinusOneSurgeryMat = -1 ∧
+    colorMatDet hotBorromeanMinusOneSurgeryMat = -1 ∧
     seifertGenusInt t = B.a02 * B.a02 ∧
-    colorMat3ToBioMat3 artinBraidGen1 = bioGen1 :=
+    hotColorMat3ToBioMat3 artinBraidGen1 = bioGen1 :=
   ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 /--
